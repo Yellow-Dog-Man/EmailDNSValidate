@@ -1,9 +1,7 @@
 <?php
 
-namespace EmailDNSValidate;
-
 use MediaWiki\Auth\AbstractPreAuthenticationProvider;
-use Status;
+use StatusValue;
 
 class EmailDNSValidate extends AbstractPreAuthenticationProvider {
 	/**
@@ -14,14 +12,14 @@ class EmailDNSValidate extends AbstractPreAuthenticationProvider {
 	 * @param \User $user
 	 * @param \User $creator
 	 * @param array $reqs
-	 * @return Status
+	 * @return StatusValue
 	 */
 	public function testForAccountCreation( $user, $creator, array $reqs ) {
 		// extract domain from email :
 		$email = $user->getEmail();
 
 		if ( strpos( $email, '@' ) === false ) {
-			return $this->makeError( wfMessage( 'emaildnsvalidate-formatvalfail' ) );
+			return StatusValue::newFatal('emaildnsvalidate-formatvalfail' );
 		}
 
 		$domain = substr( $email, strpos( $email, '@' ) + 1 );
@@ -32,11 +30,11 @@ class EmailDNSValidate extends AbstractPreAuthenticationProvider {
 			// reject private or reserved (includes loopback) IPs
 			if (!filter_var($domain, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE))
 			{
-				return $this->makeError( wfMessage( 'emaildnsvalidate-ipprivres' ) );
+				return StatusValue::newFatal( 'emaildnsvalidate-ipprivres' );
 			}
 
 			// other IP addresses are ok
-			return Status::newGood();
+			return StatusValue::newGood();
 		}
 
 		// domains should actually end in a . to prevent checkdnsrr from trying to lookup the domain
@@ -49,10 +47,10 @@ class EmailDNSValidate extends AbstractPreAuthenticationProvider {
 		// Does it have an MX record
 		if (checkdnsrr($domain, "MX"))
 		{
-			return Status::newGood();
+			return StatusValue::newGood();
 		}
 
 		// Otherwise no dice
-		return $this->makeError( wfMessage( 'emaildnsvalidate-nxdomain' ) );
+		return StatusValue::newFatal( 'emaildnsvalidate-nxdomain' );
 	}
 }
