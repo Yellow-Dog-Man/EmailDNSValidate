@@ -24,7 +24,7 @@
     "AuthManagerAutoConfig": {
         "preauth": {
             "MailDomainRestrictionPreAuthenticationProvider": {
-                "class": "EmailDnsValidate"
+                "class": "EmailDNSValidate"
             }
         }
     },
