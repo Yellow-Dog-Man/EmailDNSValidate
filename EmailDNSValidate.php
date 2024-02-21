@@ -1,7 +1,6 @@
 <?php
 
 use MediaWiki\Auth\AbstractPreAuthenticationProvider;
-use StatusValue;
 
 class EmailDNSValidate extends AbstractPreAuthenticationProvider {
 	/**
