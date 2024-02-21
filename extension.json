@@ -1,32 +1,34 @@
 {
     "name": "EmailDNSValidate",
-    "author": "David Mueller",
-    "url": "https://github.com/quanterium/EmailDNSValidate",
+    "author": [
+        "David Mueller",
+        "Richard Fox"
+    ],
+    "url": "https://github.com/YellowDogMan/EmailDNSValidate",
+
     "license-name": "GPL-2.0+",
-    "version": "0.0.5",
+    "version": "1.0.0",
+    "manifest_version": 3,
+
     "namemsg": "emailDNSValidate",
     "descriptionmsg": "emailDNSValidate-desc",
-    "manifest_version": 2,
     "MessagesDirs": {
         "EmailDNSValidate": [ "i18n" ]
     },
+
     "type": "other",
     "requires": {
-            "MediaWiki": ">= 1.25.0"
+            "MediaWiki": ">= 1.31.0"
     },
-    "AutoloadClasses": {
-            "EmailDNSValidate": "EmailDNSValidate_body.php"
-    },
-    "Hooks": {
-            "isValidEmailAddr": "EmailDNSValidate::onisValidEmailAddr"
-    },
-    "config": {
-        "EmailDNSValidateDomainBlacklist": {
-           "value": []
+
+    "AuthManagerAutoConfig": {
+        "preauth": {
+            "MailDomainRestrictionPreAuthenticationProvider": {
+                "class": "EmailDnsValidate"
+            }
         }
     },
-    "ConfigRegistry": {
-        "EmailDNSValidate": "GlobalVarConfig::newInstance"
+    "AutoloadClasses": {
+            "EmailDNSValidate": "EmailDNSValidate.php"
     }
-
 }
