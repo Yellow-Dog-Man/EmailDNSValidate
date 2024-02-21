@@ -23,3 +23,14 @@ The domain name must Have an active MX DNS Record OR be a Public IP
 
 Bugs Reports and Feature Requests can be made by creating an Issue on GitHub. Pull requests for
 changes are also welcome.
+
+
+## Fork References
+This fork was updated using the following links as references/information:
+- https://github.com/somadeaki/RestrictEmailDomain
+- https://github.com/dokit/mediawiki-MailDomainRestriction
+- https://github.com/rphsoftware/mw-discord-oauth2
+- https://www.mediawiki.org/wiki/Manual:SessionManager_and_AuthManager
+- https://doc.wikimedia.org/mediawiki-core/master/php/classMediaWiki_1_1Auth_1_1AbstractPreAuthenticationProvider.html
+
+We were primarily searching for "stop account creation and display message" so this is also included in the hopes it helps with search.
